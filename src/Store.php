@@ -892,7 +892,7 @@ class Store
      * @return int
      * @throws InvalidArgumentException
      */
-    private function checkAndStripId($id): int
+    private function checkAndStripId($id)
     {
         if (!is_string($id) && !is_int($id)) {
             throw new InvalidArgumentException("The id of the document has to be an integer or string");
@@ -902,11 +902,11 @@ class Store
             $id = IoHelper::secureStringForFileAccess($id);
         }
 
-        if (!is_numeric($id)) {
-            throw new InvalidArgumentException("The id of the document has to be numeric");
-        }
+        // if (!is_numeric($id)) {
+        //     throw new InvalidArgumentException("The id of the document has to be numeric");
+        // }
 
-        return (int) $id;
+        return $id;
     }
 
     /**
