@@ -350,7 +350,7 @@ class Store
         // save to access file with primary key value because we secured it above
         $storePath = $this->getDataPath() . "$data[$primaryKey].json";
 
-        IoHelper::writeContentToFile($storePath, json_encode($data));
+        IoHelper::writeContentToFile($storePath, json_encode($data, JSON_PRETTY_PRINT));
 
         $this->createQueryBuilder()->getQuery()->getCache()->deleteAllWithNoLifetime();
 
@@ -409,7 +409,7 @@ class Store
         foreach ($data as $document) {
             // save to access file with primary key value because we secured it above
             $storePath = $this->getDataPath() . "$document[$primaryKey].json";
-            IoHelper::writeContentToFile($storePath, json_encode($document));
+            IoHelper::writeContentToFile($storePath, json_encode($document, JSON_PRETTY_PRINT));
         }
 
         $this->createQueryBuilder()->getQuery()->getCache()->deleteAllWithNoLifetime();
@@ -462,7 +462,7 @@ class Store
         foreach ($updatable as $document) {
             // save to access file with primary key value because we secured it above
             $storePath = $this->getDataPath() . "$document[$primaryKey].json";
-            IoHelper::writeContentToFile($storePath, json_encode($document));
+            IoHelper::writeContentToFile($storePath, json_encode($document, JSON_PRETTY_PRINT));
         }
 
         $this->createQueryBuilder()->getQuery()->getCache()->deleteAllWithNoLifetime();
@@ -504,7 +504,7 @@ class Store
             foreach ($updatable as $key => $value) {
                 NestedHelper::updateNestedValue($key, $content, $value);
             }
-            return json_encode($content);
+            return json_encode($content, JSON_PRETTY_PRINT);
         });
 
         $this->createQueryBuilder()->getQuery()->getCache()->deleteAllWithNoLifetime();
@@ -836,7 +836,7 @@ class Store
         // Add the system ID with the store data array.
         $storeData[$primaryKey] = $id;
         // Prepare storable data
-        $storableJSON = @json_encode($storeData);
+        $storableJSON = @json_encode($storeData, JSON_PRETTY_PRINT);
         if ($storableJSON === false) {
             throw new JsonException('Unable to encode the data array,
             please provide a valid PHP associative array');
